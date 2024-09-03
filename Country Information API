@@ -1,0 +1,26 @@
+import requests
+import json
+import sys
+from pandas import json_normalize
+
+url = 'https://api.bigdatacloud.net/data/country-info'
+sys.stdout.reconfigure(encoding='utf-8')
+
+key = ''
+
+params = {
+    'code': 'BRA',
+    'key': key,
+    'countryCode': 'BR'
+}
+
+response = requests.get(url, params=params)
+
+if response.status_code == 200:
+    data = response.json()
+    df = json_normalize(data)
+    print(df)
+else:
+    print(f"Erro: {response.status_code}")
+
+df.info()
